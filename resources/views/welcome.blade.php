@@ -3,6 +3,7 @@
 <head>
     <title>Facebook Login JavaScript Example</title>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <script>
@@ -35,7 +36,8 @@
 
     window.fbAsyncInit = function() {
         FB.init({
-            appId      : '2117205798334780',
+            appId      : '587226395035824',
+            // appId      : '2117205798334780',
             cookie     : true,  // enable cookies to allow the server to access
                                 // the session
             xfbml      : true,  // parse social plugins on this page
