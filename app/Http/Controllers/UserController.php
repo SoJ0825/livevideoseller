@@ -67,9 +67,44 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        
+    public function update(Request $request)
+    {   
+        $tokens = $request->all('token');
+        foreach($tokens as $token){};
+        $names = $request->all('name');
+        foreach($names as $name){};
+        $phones = $request->all('phone');
+        foreach($phones as $phone){};
+        $addresss = $request->all('address');
+        foreach($addresss as $address){};
+
+        $fb = new \Facebook\Facebook([
+            'app_id' => '587226395035824',
+            'app_secret' => '2c5a8bcc0f3f448b5d21adfbf71d978d',
+            'default_graph_version' => 'v3.2',
+        ]);
+        try {
+        $response = $fb->get('/me?fields=id,name,email,picture', $token);
+        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        echo 'Graph returned an error: ' . $e->getMessage();
+        exit;
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        echo 'Facebook SDK returned an error: ' . $e->getMessage();
+        exit;
+        }
+
+        $user = $response->getGraphUser();
+        $graphNode = $response->getGraphNode();
+        $result = User::where('fb_id', '=', $user['id'])->first();
+        $result->update([
+                'name'=>$name,
+                'phone'=>$phone,
+                'address'=>$address
+            ]);
+        return response()->json([
+            'result' => 'True',
+            'response' => 'Update OK'
+        ]);
     }
 
     /**
@@ -88,7 +123,7 @@ class UserController extends Controller
         $tokens = $request->all('token');
         foreach($tokens as $token){};
 
-        $expireds = $request->all('expireIn');
+        $expireds = $request->all('expired_time');
         foreach($expireds as $expired){};
 
         $fb = new \Facebook\Facebook([
