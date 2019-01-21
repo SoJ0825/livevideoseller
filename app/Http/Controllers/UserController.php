@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Validator;
 
 class UserController extends Controller
 {
@@ -69,6 +70,19 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {   
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'address' => 'required|string|max:255'
+        ]);
+
+        if($validator->fails()){ //fails() is a bool
+            return response()->json([
+                'result' => 'false',
+                'response' => $validator->errors()->first()
+            ]);
+        };
+        
         $tokens = $request->all('token');
         foreach($tokens as $token){};
         $names = $request->all('name');
@@ -96,6 +110,7 @@ class UserController extends Controller
         $user = $response->getGraphUser();
         $graphNode = $response->getGraphNode();
         $result = User::where('fb_id', '=', $user['id'])->first();
+
         $result->update([
                 'name'=>$name,
                 'phone'=>$phone,
