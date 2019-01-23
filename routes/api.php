@@ -20,3 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'UserController@check');
 
 Route::put('/user/update', 'UserController@update');
+
+Route::get('/live_video/lists', 'ProductController@liveVideoList');
+
+Route::get('/products/list/{live_video_id}', 'ProductController@productList');
+
+Route::post('/orders/create', 'OrderController@orderCreate');
+
+Route::post('buyer/orders/{live_video_id?}', 'OrderController@buyerOrder');
