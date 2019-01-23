@@ -60,4 +60,5 @@ Route::middleware('validateToken')->group(function () {
     Route::post('/live_video/start', 'LiveVideoController@start');
     Route::post('/live_video/stop', 'LiveVideoController@stop');
     Route::post('/seller/video_list', 'LiveVideoController@show');
+    Route::post('/seller/orders/{live_video_id?}', 'OrderController@showWithLiveVideoId');
 });
