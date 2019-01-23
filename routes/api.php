@@ -20,3 +20,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'UserController@check');
 
 Route::put('/user/update', 'UserController@update');
+
+Route::prefix('fake')->group(function () {
+    //login
+    Route::post('login', 'FakeController@login');
+    Route::post('firstlogin', 'FakeController@firstlogin');
+    Route::put('user/update', 'FakeController@userupdate');
+    //buyer
+    Route::get('live_video/lists', 'FakeController@livevideolists');
+    //seller
+    Route::post('product/preparelist', 'FakeController@productpreparelist');
+    Route::post('product/set', 'FakeController@productset');
+    Route::put('product/update', 'FakeController@productupdate');
+    Route::delete('product/delete', 'FakeController@productdelete');
+    Route::post('product/sell', 'FakeController@productsell');
+    Route::post('product/stopsell', 'FakeController@productstopsell');
+    Route::post('live_video/start', 'FakeController@livevideostart');
+    Route::post('live_video/stop', 'FakeController@livevideostop');
+    Route::post('seller/video_list', 'FakeController@sellervideolist');
+    Route::post('seller/orders', 'FakeController@sellerorders');
+    Route::get('errormessage', 'FakeController@errormessage');
+});
