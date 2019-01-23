@@ -41,3 +41,23 @@ Route::prefix('fake')->group(function () {
     Route::post('seller/orders', 'FakeController@sellerorders');
     Route::get('errormessage', 'FakeController@errormessage');
 });
+
+//login
+Route::post('/login', 'UserController@check');
+
+Route::put('/user/update', 'UserController@update');
+
+//seller
+Route::middleware('validateToken')->group(function () {
+    Route::post('/product/preparelist', 'ProductController@prepare');
+    Route::post('/product/set', 'ProductController@setNewProduct');
+    Route::put('/product/update', 'ProductController@updateProduct');
+    Route::delete('/product/delete', 'ProductController@delete');
+    Route::post('/product/sell', 'ProductController@sell');
+    Route::post('/product/stopsell', 'ProductController@stopSell');
+
+    //live video
+    Route::post('/live_video/start', 'LiveVideoController@start');
+    Route::post('/live_video/stop', 'LiveVideoController@stop');
+    Route::post('/seller/video_list', 'LiveVideoController@show');
+});

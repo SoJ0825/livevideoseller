@@ -21,7 +21,7 @@ class ValidateToken {
         $validator = Validator::make(
             $request->all(),
             [
-                'token' => 'required|string|min:215'
+                'token' => 'required|string|max:255'
             ]
         );
 
