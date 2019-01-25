@@ -11,4 +11,9 @@ class User extends Authenticatable
     protected $guarded = [];
 
     protected $hidden = ['fb_id','fb_name','fb_email','fb_picture','token','expired_time','created_at','updated_at'];
+
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
 }
