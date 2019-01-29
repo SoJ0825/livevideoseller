@@ -15,14 +15,16 @@ class ProductController extends Controller {
     {
         $result = DB::table('livevideolists')->select('live_video_id', 'title')->where('is_online', '=', 1)->get();
 
-        if(count($result) > 0){
+        if (count($result) > 0)
+        {
             return response()->json([
                 'result'   => 'True',
                 'response' => $result
             ]);
-        } else {
+        } else
+        {
             return response()->json([
-                'result' => 'False',
+                'result'   => 'False',
                 'response' => $result
             ]);
         }
@@ -66,7 +68,8 @@ class ProductController extends Controller {
                 'product.name'        => 'required|string',
                 'product.description' => 'required|string',
                 'product.price'       => 'required|integer',
-                'product.picture'     => 'required|string'
+                'product.picture'     => 'required|string',
+                'product.life_time'   => 'nullable|integer',
             ]
         );
 
@@ -79,7 +82,8 @@ class ProductController extends Controller {
             'name'        => $request->product['name'],
             'description' => $request->product['description'],
             'price'       => $request->product['price'],
-            'picture'     => $request->product['picture']
+            'picture'     => $request->product['picture'],
+            'life_time'   => isset($request->product['life_time']) ? $request->product['life_time'] : 0,
         ]);
 
         return response(['result'   => 'true',
@@ -98,7 +102,8 @@ class ProductController extends Controller {
                 'product.name'        => 'required|string',
                 'product.description' => 'required|string',
                 'product.price'       => 'required|integer',
-                'product.picture'     => 'required|string'
+                'product.picture'     => 'required|string',
+                'product.life_time'   => 'nullable|integer',
             ]
         );
 
@@ -117,7 +122,8 @@ class ProductController extends Controller {
                 'name'        => $request->product['name'],
                 'description' => $request->product['description'],
                 'price'       => $request->product['price'],
-                'picture'     => $request->product['picture']
+                'picture'     => $request->product['picture'],
+                'life_time'   => isset($request->product['life_time']) ? $request->product['life_time'] : 0,
             ]);
 
         return response(['result'   => 'true',
