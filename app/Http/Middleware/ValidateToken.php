@@ -53,9 +53,17 @@ class ValidateToken {
             exit;
         }
 
-        $user = User::where('fb_id', $response->getGraphUser()->getId())->first();
-        session()->put('user_id', $user->id);
+        if ($user = User::where('fb_id', $response->getGraphUser()->getId())->first())
+        {
+            session()->put('user_id', $user->id);
 
-        return $next($request);
+            return $next($request);
+
+        } else
+        {
+            return response(['result' => 'false', 'response' => 'Please login first']);
+        }
+
+
     }
 }
