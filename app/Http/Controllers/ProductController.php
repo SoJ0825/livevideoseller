@@ -9,20 +9,22 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
+
     public function liveVideoList()
     {
         $result = DB::table('livevideolists')->select('live_video_id', 'title')->get();
-        
-        if(count($result) > 0){            
+
+        if (count($result) > 0)
+        {
             return response()->json([
-                'result' => 'True',
+                'result'   => 'True',
                 'response' => $result
             ]);
-        } else {
+        } else
+        {
             return response()->json([
-                'result' => 'False',
+                'result'   => 'False',
                 'response' => 'There are no data in database'
             ]);
         }
@@ -32,17 +34,19 @@ class ProductController extends Controller
     {
         $result = DB::table('products')->select('id', 'name', 'description', 'price', 'picture')->where('live_video_id', '=', $live_video_id)->get();
 
-        if(count($result) > 0){
+        if (count($result) > 0)
+        {
             return response()->json([
-                'result' => 'True',
+                'result'   => 'True',
                 'response' => [
                     'live_video_id' => $live_video_id,
-                    'products' => $result
+                    'products'      => $result
                 ],
             ]);
-        } else {
+        } else
+        {
             return response()->json([
-                'result' => 'False',
+                'result'   => 'False',
                 'response' => 'No product info'
             ]);
         }
@@ -72,7 +76,7 @@ class ProductController extends Controller
         {
             return response(['result' => 'false', 'response' => $validator->errors()->first()]);
         }
-        Product::forceCreate([
+        $product = Product::forceCreate([
             'user_id'     => session('user_id'),
             'name'        => $request->product['name'],
             'description' => $request->product['description'],
@@ -81,7 +85,9 @@ class ProductController extends Controller
         ]);
 
         return response(['result'   => 'true',
-                         'response' => "Create product " . $request->product['name'] . " OK"]);
+                         'response' => [
+                             'message' => "Create product " . $request->product['name'] . " OK",
+                             'id'      => $product->id]]);
     }
 
     public function updateProduct(Request $request)
@@ -187,9 +193,9 @@ class ProductController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'live_video_id'     => 'required|string|size:16',
-                'product'           => 'required|array',
-                'product.id'        => 'required|integer',
+                'live_video_id' => 'required|string|size:16',
+                'product'       => 'required|array',
+                'product.id'    => 'required|integer',
             ]
         );
 
