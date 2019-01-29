@@ -21,7 +21,6 @@ Route::post('/login', 'UserController@check');
 
 Route::put('/user/update', 'UserController@update');
 
-
 Route::get('/live_video/lists', 'ProductController@liveVideoList');
 
 Route::get('/products/list/{live_video_id}', 'ProductController@productList');

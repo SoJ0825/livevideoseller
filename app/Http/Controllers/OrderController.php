@@ -115,7 +115,7 @@ class OrderController extends Controller
                 ]
             ]);
         }elseif($live_video_id != null){
-            $result_order = Order::where('live_video_id', '=', $live_video_id)->get();
+            $result_order = Order::where('live_video_id', '=', $live_video_id)->where('user_id', '=', $result_user->id)->get();
             return response()->json([
                 'result' => 'True',
                 'response' => $result_order
