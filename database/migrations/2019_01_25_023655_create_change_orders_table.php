@@ -25,6 +25,8 @@ class CreateChangeOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('change_orders');
+        Schema::table('orders', function (Blueprint $table){
+           $table->string('picture')->nullable(false)->change();
+        });
     }
 }
