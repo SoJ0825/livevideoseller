@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Facebook\Exceptions\FacebookResponseException;
 use Illuminate\Support\Facades\Log;
 
 
@@ -54,6 +55,16 @@ class Handler extends ExceptionHandler {
             $response = response()->json([
                 'result'   => 'false',
                 'response' => 'Method is not allowed for the requested route',
+            ]);
+
+            return $response;
+        }
+
+        if ($exception instanceof FacebookResponseException)
+        {
+            $response = response()->json([
+                'result'   => 'false',
+                'response' => 'Please Login first.',
             ]);
 
             return $response;
