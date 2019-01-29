@@ -51,12 +51,11 @@ class Handler extends ExceptionHandler {
     {
         if ($exception instanceof MethodNotAllowedHttpException)
         {
-            Log::info($request->method(), $request->input());
             $response = response()->json([
                 'result'   => 'false',
                 'response' => 'Method is not allowed for the requested route',
             ]);
-            Log::info($response->getContent());
+
             return $response;
         }
 

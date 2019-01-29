@@ -52,7 +52,7 @@ Route::prefix('fake')->group(function () {
 });
 
 //seller
-Route::middleware('log', 'validateToken')->group(function () {
+Route::middleware('validateToken')->group(function () {
     Route::post('/product/preparelist', 'ProductController@prepare');
     Route::post('/product/set', 'ProductController@setNewProduct');
     Route::put('/product/update', 'ProductController@updateProduct');

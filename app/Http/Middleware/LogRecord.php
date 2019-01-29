@@ -20,7 +20,7 @@ class LogRecord
 
         $response = $next($request);
 
-        Log::Info($response);
+        Log::Info($response->getContent());
 
         return $response;
     }
