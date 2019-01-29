@@ -18,8 +18,9 @@ class UserController extends Controller
     public function update(Request $request)
     {   
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
+            'token' => 'required|string',
+            'name' => 'required|string',
+            'phone' => 'required|string',
             'address' => 'required|string|max:255'
         ]);
 
@@ -67,6 +68,18 @@ class UserController extends Controller
 
     public function check(Request $request)
     {   
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+            'expired_time' => 'required'
+        ]);
+
+        if($validator->fails()){ //fails() is a bool
+            return response()->json([
+                'result' => 'false',
+                'response' => $validator->errors()->first()
+            ]);
+        };
+
         $token = $request->get('token');
         $expired = $request->get('expired_time');
 

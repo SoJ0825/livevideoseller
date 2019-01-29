@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function liveVideoList()
     {
-        $result = DB::table('livevideolists')->select('live_video_id', 'title')->get();
+        $result = DB::table('livevideolists')->select('live_video_id', 'title')->where('is_online', '=', 1)->get();
         
         if(count($result) > 0){            
             return response()->json([
@@ -23,7 +23,7 @@ class ProductController extends Controller
         } else {
             return response()->json([
                 'result' => 'False',
-                'response' => 'There are no data in database'
+                'response' => $result
             ]);
         }
     }
