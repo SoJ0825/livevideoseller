@@ -51,13 +51,8 @@ Route::prefix('fake')->group(function () {
     Route::get('errormessage', 'FakeController@errormessage');
 });
 
-//login
-Route::post('/login', 'UserController@check');
-
-Route::put('/user/update', 'UserController@update');
-
 //seller
-Route::middleware('validateToken')->group(function () {
+Route::middleware('log', 'validateToken')->group(function () {
     Route::post('/product/preparelist', 'ProductController@prepare');
     Route::post('/product/set', 'ProductController@setNewProduct');
     Route::put('/product/update', 'ProductController@updateProduct');
