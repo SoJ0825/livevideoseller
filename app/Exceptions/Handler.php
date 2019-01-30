@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Facebook\Exceptions\FacebookResponseException;
+use ErrorException;
 use Illuminate\Support\Facades\Log;
 
 
@@ -50,6 +51,7 @@ class Handler extends ExceptionHandler {
      */
     public function render($request, Exception $exception)
     {
+//        dd(get_class($exception));
         if ($exception instanceof MethodNotAllowedHttpException)
         {
             $response = response()->json([
@@ -70,6 +72,15 @@ class Handler extends ExceptionHandler {
             return $response;
         }
 
+        if ($exception instanceof ErrorException)
+        {
+            $response = response()->json([
+                'result'   => 'false',
+                'response' => 'Sorry, something wrong in server',
+            ]);
+
+            return $response;
+        }
         return parent::render($request, $exception);
     }
 }
