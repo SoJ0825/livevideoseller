@@ -113,7 +113,7 @@ class ProductController extends Controller {
         }
 
         $product = Product::where('id', $request->product['id'])->first();
-        if ($product->user_id != session('user_id'))
+        if ($product == null || $product->user_id != session('user_id'))
         {
             return response(['result' => 'false', 'response' => 'Please confirm your product id']);
         }
@@ -182,6 +182,7 @@ class ProductController extends Controller {
         Product::where('id', $request->product['id'])
             ->update([
                 'live_video_id' => $request->live_video_id,
+                'life_time' => $request->product['lifetime'],
                 'expired_time'  =>
                     $request->product['life_time'] == 0 ? 0 : $request->product['life_time'] + time(),
                 'buyable'       => true
