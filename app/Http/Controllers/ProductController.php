@@ -182,7 +182,7 @@ class ProductController extends Controller {
         Product::where('id', $request->product['id'])
             ->update([
                 'live_video_id' => $request->live_video_id,
-                'life_time' => $request->product['lifetime'],
+                'life_time' => $request->product['life_time'],
                 'expired_time'  =>
                     $request->product['life_time'] == 0 ? 0 : $request->product['life_time'] + time(),
                 'buyable'       => true
